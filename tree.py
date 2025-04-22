@@ -73,7 +73,7 @@ def directory_sanitizer(path: str) -> bool:
         return False
 
 def print_tree(
-    directory: str, prefix: str = "", include_dotfiles: bool = False
+    directory: str, prefix: str="", include_dotfiles: bool=False
 ) -> None:
     """
     Recursively prints the directory structure in a tree-esque format.
@@ -100,9 +100,16 @@ def print_tree(
         # create the full path to the item
         path = os.path.join(directory, item)
         # check if the item is a directory
-        is_last = index == count - 1
+        is_last = (index == count - 1) # bool
+
         # print the tree structure
-        print(prefix + ("└── " if is_last else "├── ") + item)
+        print(
+            prefix +
+            ("└── " if is_last else "├── ") +
+            item +
+            ("/" if os.path.isdir(path) else "")
+        )
+
         # if its a directory, recursively print its contents
         if os.path.isdir(path):
             # prefix = current prefix + new prefix
