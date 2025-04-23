@@ -11,39 +11,61 @@ tree.py
 Recursively prints the structure of a certain directory and subdirectories in a tree-esque format.
 """
 
+from argparse import ArgumentParser
 import os
-import sys
+
+NAME="tree"
 
 def main() -> None:
     """
-    Main function of tree.py. Parses command line arguments (sys.argv)
+    Main function of tree.py.
 
     Args: None
     Returns: None
     """
-    args_amount = len(sys.argv)
+    args = run_argparse()
 
-    # check for -a or --all flag in the last arg
-    if sys.argv[args_amount - 1] in ["-a", "--all"]:
-        is_all = True
-    else:
-        is_all = False
+    if directory_sanitizer(args.directory):
+        print_tree(args.directory, include_dotfiles=args.all, max_depth=args.depth)
 
-    # print cwd if no directory specified
-    if args_amount == 1:
-        print_tree(os.getcwd())
-    elif args_amount == 2 and is_all is True:
-        print_tree(os.getcwd(), include_dotfiles=is_all)
 
-    # specified directory
-    elif args_amount == 2 and is_all is False:
-        if directory_sanitizer(sys.argv[1]):
-            print_tree(sys.argv[1])
-    elif args_amount == 3 and is_all is True:
-        if directory_sanitizer(sys.argv[1]):
-            print_tree(sys.argv[1], include_dotfiles=is_all)
-    else:
-        print("usage: tree || tree <DIR> [-a | --all]")
+def run_argparse() -> ArgumentParser:
+    """
+    Parse the user's command line arguments. Runs at the beginning of the program.
+
+    Args: none
+    Returns: parser.parse_args() (parsed arguments. an argparse obj)
+    """
+
+    parser = ArgumentParser(
+        description='''Recursively prints the structure of a certain directory
+        and its subdirectories in a tree-esque format. This script is under the 
+        MIT License. Copyright (c) 2025 Zahra A. S.''',
+        epilog='For more information, see documentation at github.com/zhrsh/treepy',
+        prog=NAME
+    )
+
+    parser.add_argument(
+        'directory', nargs='?', default=os.getcwd(), 
+        metavar="<DIRECTORY>",
+        help='''optional. the path of the directory to print.
+        (default: current working directory if not specified).'''
+    )
+
+    parser.add_argument(
+        '-a', '--all',
+        action='store_true',
+        help='include hidden files in the tree.'
+    )
+
+    parser.add_argument(
+        '-d', '--depth', default=10,
+        type=int,
+        metavar="<INT>",
+        help='limit of the subdirectory depth to recursively print (default: 10).'
+    )
+
+    return parser.parse_args()
 
 def directory_sanitizer(path: str) -> bool:
     """
@@ -94,7 +116,7 @@ def print_tree(
     Returns:
         None: This function prints the directory structure to the console.
     """
-    print(os.path.basename(os.getcwd()) + "/")
+    print(os.path.basename(directory) + "/")
     print_directory(directory, prefix, include_dotfiles, max_depth)
 
 def print_directory(
