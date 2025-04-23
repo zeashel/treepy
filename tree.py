@@ -33,8 +33,9 @@ def run_argparse() -> ArgumentParser:
     """
     Parse the user's command line arguments. Runs at the beginning of the program.
 
-    Args: none
-    Returns: parser.parse_args() (parsed arguments. an argparse obj)
+    Args: None
+    Returns: 
+        parser.parse_args() (parsed arguments. ArgumentParser obj)
     """
 
     parser = ArgumentParser(
@@ -99,31 +100,6 @@ def print_tree(
     prefix: str="",
     include_dotfiles: bool=False,
     max_depth: int=10,     # default 10
-) -> None:
-    """
-    `print_directory` prints the directory and subdirectories structure in a tree-esque format.
-    This function only includes the CWD as the parent directory.
-
-    Args:
-        directory (str): The path to the directory to be printed.
-        prefix (str, optional): The string prefix used for indentation in the output. 
-                                Defaults to an empty string.
-        include_dotfiles (bool, optional): If True, includes hidden files (dotfiles) 
-                                           in the output. Defaults to False.
-        max_depth (int, optional): The maximum depth of recursion. Defaults to no limit.
-        current_depth (int, optional): The current depth of recursion. Defaults to 0.
-
-    Returns:
-        None: This function prints the directory structure to the console.
-    """
-    print(os.path.basename(directory) + "/")
-    print_directory(directory, prefix, include_dotfiles, max_depth)
-
-def print_directory(
-    directory: str,
-    prefix: str="",
-    include_dotfiles: bool=False,
-    max_depth: int=10,     # default 10
     current_depth: int=0   # current depth
 ) -> None:
     """
@@ -141,9 +117,12 @@ def print_directory(
     Returns:
         None: This function prints the directory structure to the console.
     """
-    # if the current depth exceeds maximum depth
     if current_depth > max_depth:
         return
+
+    if current_depth == 0:
+        # root of the tree
+        print(os.path.basename(directory) + "/")
 
     # get a list of all files and directories in the given directory
     items = os.listdir(directory)
@@ -170,7 +149,7 @@ def print_directory(
         # if its a directory, recursively print its contents
         if os.path.isdir(path):
             # prefix = current prefix + new prefix
-            print_directory(
+            print_tree(
                 path,
                 prefix + ("    " if is_last else "│   "),
                 include_dotfiles,
