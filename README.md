@@ -1,6 +1,6 @@
 # tree.py
 
-Python script to print the structure of a certain directory and its subdirectories in a tree-esque format using recursion.
+A simple Python script to recursively print the structure of a certain directory and its subdirectories in a tree-esque format. See [examples](#examples).
 
 ## Dependencies
 
@@ -33,29 +33,44 @@ Install from the releases page, then drag and drop the `tree` file into a direct
 ### Print the structure of the current working directory
 
 ```bash
-tree
+$ tree
 ```
 
 ### Print the structure of a certain directory
 
 ```bash
-tree ~/Projects/example/directory
+$ tree ~/Projects/example/directory
 ```
 
 ### Include dotfiles
 By default, tree ignores dotfiles. Use `-a` or `--all` flag to include them.
 
 ```bash
-tree -a
+$ tree -a
 ```
 
 ```bash
-tree ~/Projects/example/directory --all
+$ tree ~/Projects/example/directory --all
 ```
 
-## Example
+### Subdirectory depth
+You can specifiy how many subdirectories you want to recursively print by using `-d` or `--depth` followed by an integer. By default, it is limited to 10, but you can specify any integer you want.
 
-Using tree on my portfolio project:
+```bash
+$ tree -d 3 # only print subdirectories that are no more than 3 directories deep
+```
+
+```bash
+$ tree ~/Projects/example/directory --depth 0 # dont print subdirectories (similar to ls command)
+```
+
+The [examples](#using-tree--d-0) probably explain this better.
+
+## Examples
+
+### Basic usage
+
+Using just `tree` on my portfolio project:
 
 ```plaintext
 my-portfolio/
@@ -66,13 +81,8 @@ my-portfolio/
 │   ├── js/
 │   │   └── bloodmoon.js
 │   ├── img/
-│   │   ├── paralax-hq.jpg
-│   │   ├── faviconic.png
-│   │   ├── pfp-sample.jpg
-│   │   ├── paralax-lq.jpg
 │   │   ├── sample6.jpg
 │   │   ├── sample5.jpg
-│   │   ├── preview.gif
 │   │   ├── sample4.jpg
 │   │   ├── sample1.jpg
 │   │   ├── sample3.jpg
@@ -80,14 +90,51 @@ my-portfolio/
 │   └── fonts/
 │       ├── ebgaramond-italic-variablefont_wght.woff
 │       ├── meyne_textur.ttf
-│       ├── EBGaramond-SemiBoldItalic.woff2
-│       ├── EBGaramond-Regular.woff2
-│       ├── EBGaramond-MediumItalic.woff2
-│       ├── EBGaramond-Medium.woff2
-│       ├── ebgaramond-variablefont_wght.woff
-│       ├── EBGaramond-SemiBold.woff2
-│       ├── UnifrakturMaguntia-webfont.woff
-│       └── EBGaramond-Italic.woff2
+│       └──  ebgaramond-variablefont_wght.woff
+└── pages/
+    └── index.html
+```
+
+### Using `tree -a -d 1`
+
+This includes dotfiles and limits the subdirectory depth to 1
+
+```plaintext
+my-portfolio/
+├── .DS_Store
+├── readme.md
+├── .gitignore
+├── .git/
+│   ├── .DS_Store
+│   └── FETCH_HEAD
+├── assets/
+│   ├── css/
+│   ├── js/
+│   ├── img/
+│   └── fonts/
+└── pages/
+    └── index.html
+```
+
+### Using `tree -d 0`
+Limits the subdirectory depth to 0
+```plaintext
+my-portfolio/
+├── readme.md
+├── assets/
+└── pages/
+```
+
+### Using `tree -d 1`
+Limits the subdirectory depth to 1
+```plaintext
+my-portfolio/
+├── readme.md
+├── assets/
+│   ├── css/
+│   ├── js/
+│   ├── img/
+│   └── fonts/
 └── pages/
     └── index.html
 ```
