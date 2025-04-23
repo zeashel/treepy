@@ -9,17 +9,24 @@ Python 3.9.6 or higher
 ## Installation
 
 ### Using Command Line (Linux/MacOS/UNIX-like)
+
 Assuming you have ~/bin as a PATH environment variable and python 3 installed, run this in your terminal:
 ```bash
 git clone https://github.com/zhrsh/treepy.git
 cd treepy
 ./install.sh
 ```
-You can modify the DIR_USR variable in install.sh if a different installation path is needed.
+
+You can add an argument to ./install.sh if a different installation path is needed.
+```bash
+git clone https://github.com/zhrsh/treepy.git
+cd treepy
+./install.sh DIFFERENT/INSTALL/PATH
+```
 
 ### Manual installation
 
-Install from the releases page, drag and drop the `tree` file into a directory in your PATH enviorment.
+Install from the releases page, then drag and drop the `tree` file into a directory registered in your PATH. Tip: run `echo $PATH` to view said directories.
 
 ## Usage
 
