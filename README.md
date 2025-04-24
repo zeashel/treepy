@@ -1,6 +1,8 @@
 # tree.py
 
-A simple Python script to recursively print the structure of a certain directory and its subdirectories in a tree-esque format. See [examples](#examples).
+A simple Python script to recursively print the structure of a certain directory and its subdirectories in a tree-esque format.
+
+<img src="assets/img/example.png" width=500>
 
 ## Dependencies
 
