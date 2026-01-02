@@ -99,8 +99,9 @@ def print_tree(
     directory: str,
     prefix: str="",
     include_dotfiles: bool=False,
-    max_depth: int=10,     # default 10
-    current_depth: int=0   # current depth
+    max_depth: int=10,
+    current_depth: int=0,
+    format_dir: str="\033[0m" # default bold
 ) -> None:
     """
     Prints the directory and subdirectories structure in a tree-esque format.
@@ -122,7 +123,7 @@ def print_tree(
 
     if current_depth == 0:
         # root of the tree
-        print(os.path.basename(directory) + "/")
+        print(format_dir + os.path.basename(directory) + "/\033[0m")
 
     # get a list of all files and directories in the given directory
     items = os.listdir(directory)
@@ -142,8 +143,10 @@ def print_tree(
         print(
             prefix +
             ("└─╴" if is_last else "├─╴") +
+            (format_dir if os.path.isdir(path) else "") +
             item +
-            ("/" if os.path.isdir(path) else ""), sep=""
+            ("/\033[0m" if os.path.isdir(path) else ""),
+            sep=""
         )
 
         # if its a directory, recursively print its contents
@@ -154,7 +157,8 @@ def print_tree(
                 prefix + ("   " if is_last else "│  "),
                 include_dotfiles,
                 max_depth,
-                current_depth + 1
+                current_depth + 1,
+                format_dir
             )
 
 if __name__ == "__main__":
