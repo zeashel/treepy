@@ -15,7 +15,6 @@ from argparse import ArgumentParser
 import os
 
 NAME="tree"
-DEBUG=False
 
 def main() -> None:
     """
@@ -27,9 +26,11 @@ def main() -> None:
     args = run_argparse()
 
     # TEMP
-    if DEBUG:
-        print(args.directory_format)
-        print(repr(ansi_parse(args.directory_format)))
+    if args.verbose:
+        print("args.all:", args.all)
+        print("args.max_depth:", args.depth)
+        print("args.directory_format:", args.directory_format)
+        print("ansi_parse(args.directory_format):", repr(ansi_parse(args.directory_format)))
 
     if directory_sanitizer(args.directory):
         print_tree(
@@ -86,6 +87,12 @@ def run_argparse() -> ArgumentParser:
         for none, 1 for bold (default), 2 for dim, etc. more info:
         https://en.wikipedia.org/wiki/ANSI_escape_code#Select_Graphic_Rendition_parameters
         (default: 1)''' # TODO: improve help message
+    )
+
+    parser.add_argument(
+        '-v', '--verbose',
+        action='store_true',
+        help='enable verbose output.'
     )
 
     return parser.parse_args()
