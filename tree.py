@@ -18,7 +18,7 @@ NAME="tree"
 
 def main() -> None:
     """
-    Main function of tree.py.
+    Entry point of tree.py.
 
     Args: None
     Returns: None
@@ -125,6 +125,17 @@ def directory_sanitizer(path: str) -> bool:
         return False
 
 def ansi_parse(args: list) -> str:
+    """
+    Parse the given list of inters into a single ANSI escape sequence or an empty string.
+
+    Args:
+        args (list): List of integers that will be joined into one ANSI escape sequence.
+
+    Returns:
+        str: An ANSI escape sequence with the joined integers from args. 
+             e.g., [1, 3, 95] -> "\\033[1;3;95m"
+        str: If the list contains anything other than an integer, return an empty string.
+    """
     try:
         args = [int(x) for x in args]
     except (TypeError, ValueError):
@@ -137,22 +148,23 @@ def print_tree(
     include_dotfiles: bool=False,
     max_depth: int=10,
     current_depth: int=0,
-    format_dir: str="\033[0m" # default bold
+    format_dir: str="\033[1m" # default bold
 ) -> None:
     """
-    Prints the directory and subdirectories structure in a tree-esque format.
+    Print the directory and subdirectories structure in a tree-esque format.
 
     Args:
         directory (str): The path to the directory to be printed.
         prefix (str, optional): The string prefix used for indentation in the output. 
                                 Defaults to an empty string.
-        include_dotfiles (bool, optional): If True, includes hidden files (dotfiles) 
+        include_dotfiles (bool, optional): If True, include hidden files (dotfiles) 
                                            in the output. Defaults to False.
         max_depth (int, optional): The maximum depth of recursion. Defaults to no limit.
         current_depth (int, optional): The current depth of recursion. Defaults to 0.
+        format_dir (str, optional): ANSI escape sequence to start directory names.
 
     Returns:
-        None: This function prints the directory structure to the console.
+        None: This function prints the directory structure to the stdout.
     """
     if current_depth > max_depth:
         return
@@ -172,7 +184,8 @@ def print_tree(
     for index, item in enumerate(items):
         # create the full path to the item
         path = os.path.join(directory, item)
-        # check if the item is a directory
+
+        # check if the item is last
         is_last = (index == count - 1) # bool
 
         # print the tree structure
