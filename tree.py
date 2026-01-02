@@ -141,9 +141,9 @@ def print_tree(
         # print the tree structure
         print(
             prefix +
-            ("└── " if is_last else "├── ") +
+            ("└─╴" if is_last else "├─╴") +
             item +
-            ("/" if os.path.isdir(path) else "")
+            ("/" if os.path.isdir(path) else ""), sep=""
         )
 
         # if its a directory, recursively print its contents
@@ -151,7 +151,7 @@ def print_tree(
             # prefix = current prefix + new prefix
             print_tree(
                 path,
-                prefix + ("    " if is_last else "│   "),
+                prefix + ("   " if is_last else "│  "),
                 include_dotfiles,
                 max_depth,
                 current_depth + 1
