@@ -58,7 +58,7 @@ def run_argparse() -> ArgumentParser:
 
     parser.add_argument(
         'directory', nargs='?', default=os.getcwd(), 
-        metavar="<DIRECTORY>",
+        metavar="DIRECTORY",
         help='''optional. the path of the directory to print.
         (default: current working directory if not specified).'''
     )
@@ -80,8 +80,8 @@ def run_argparse() -> ArgumentParser:
         '--directory-format', default=[1],
         nargs='*', # 0 or more
         type=int,
-        metavar="[INT ...]",
-        choices=range(0, 54), # 0–53
+        metavar="INT",
+        choices=range(0, 256), # 0–53
         help='''0 or more arguments allowed. ANSI escape integer from 0 to 53. 0
         for none, 1 for bold (default), 2 for dim, etc. more info:
         https://en.wikipedia.org/wiki/ANSI_escape_code#Select_Graphic_Rendition_parameters
