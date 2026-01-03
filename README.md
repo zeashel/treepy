@@ -127,7 +127,13 @@ Tree only outputs to the stdout. Use output redirection to save to a file.
 tree > tree.txt
 ```
 
-This saves the output to `tree.txt` instead of dispalying it on the terminal.
+This saves the output to `tree.txt` instead of displaying it on the terminal. By default, ANSI escape codes (colors) are stripped when output is redirected to a file to ensure readability.
+
+To force color output even when redirecting to a file, use the `--color-force` flag:
+
+```bash
+tree --color-force > tree_color.txt
+```
 
 ## Examples
 

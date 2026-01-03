@@ -13,6 +13,7 @@ Recursively prints the structure of a certain directory and its subdirectories a
 
 from argparse import ArgumentParser
 import os
+import sys
 
 NAME="tree"
 
@@ -32,12 +33,17 @@ def main() -> None:
         print("args.directory_format:", args.directory_format)
         print("ansi_parse(args.directory_format):", repr(ansi_parse(args.directory_format)))
 
+    use_color = args.color_force or sys.stdout.isatty()
+    fmt_dir = ansi_parse(args.directory_format) if use_color else ""
+    fmt_reset = "\033[0m" if use_color else ""
+
     if directory_sanitizer(args.directory):
         print_tree(
             args.directory,
             include_dotfiles=args.all,
             max_depth=args.depth,
-            format_dir=ansi_parse(args.directory_format)
+            format_dir=fmt_dir,
+            format_reset=fmt_reset
         )
 
 def run_argparse() -> ArgumentParser:
@@ -85,7 +91,7 @@ def run_argparse() -> ArgumentParser:
         choices=range(0, 256), # 0–255
         help='''Set one or more ANSI SGR parameters (integers 0–255) to apply to
         directory names. 0 = none, 1 = bold, 2 = dim, etc. 
-        see https://en.wikipedia.org/wiki/ANSI\_escape\_code#Select\_Graphic\_Rendition\_parameters
+        see https://en.wikipedia.org/wiki/ANSI_escape_code#Select_Graphic_Rendition_parameters
         multiple values allowed (space-separated). example: --directory-format 1 31 4
         (bold, red, underline) (default: 1).''' # TODO: improve help message
     )
@@ -94,6 +100,12 @@ def run_argparse() -> ArgumentParser:
         '-v', '--verbose',
         action='store_true',
         help='enable verbose output.'
+    )
+
+    parser.add_argument(
+        '--color-force',
+        action='store_true',
+        help='force color output even if stdout is not a TTY.'
     )
 
     return parser.parse_args()
@@ -149,7 +161,8 @@ def print_tree(
     include_dotfiles: bool=False,
     max_depth: int=10,
     current_depth: int=0,
-    format_dir: str="\033[1m" # default bold
+    format_dir: str="\033[1m", # default bold
+    format_reset: str="\033[0m" # default reset
 ) -> None:
     """
     Print the directory and subdirectories structure in a tree-esque format.
@@ -163,6 +176,7 @@ def print_tree(
         max_depth (int, optional): The maximum depth of recursion. Defaults to no limit.
         current_depth (int, optional): The current depth of recursion. Defaults to 0.
         format_dir (str, optional): ANSI escape sequence to start directory names.
+        format_reset (str, optional): ANSI escape sequence to reset formatting.
 
     Returns:
         None: This function prints the directory structure to the stdout.
@@ -170,7 +184,7 @@ def print_tree(
 
     if current_depth == 0:
         # root of the tree
-        print(format_dir + os.path.basename(directory) + "/\033[0m")
+        print(format_dir + os.path.basename(directory) + "/" + format_reset)
 
     if current_depth >= max_depth:
         return
@@ -196,7 +210,7 @@ def print_tree(
             ("└─╴" if is_last else "├─╴") +
             (format_dir if os.path.isdir(path) else "") +
             item +
-            ("/\033[0m" if os.path.isdir(path) else ""),
+            ("/" + format_reset if os.path.isdir(path) else ""),
             sep=""
         )
 
@@ -209,7 +223,8 @@ def print_tree(
                 include_dotfiles,
                 max_depth,
                 current_depth + 1,
-                format_dir
+                format_dir,
+                format_reset
             )
 
 if __name__ == "__main__":
