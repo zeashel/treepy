@@ -8,7 +8,7 @@ Email: 182934048+zeashel@users.noreply.github.com
 
 tree.py
 
-Recursively prints the structure of a certain directory and subdirectories in a tree-esque format.
+Recursively prints the structure of a certain directory and its subdirectories as a file tree.
 """
 
 from argparse import ArgumentParser
@@ -51,7 +51,7 @@ def run_argparse() -> ArgumentParser:
 
     parser = ArgumentParser(
         description='''Recursively prints the structure of a certain directory
-        and its subdirectories in a tree-esque format. This script is under the 
+        and its subdirectories as a file tree. This script is under the 
         MIT License. Copyright (c) 2025 Zahra A. S.''',
         epilog='For more information, see documentation at github.com/zeashel/treepy',
         prog=NAME
@@ -60,21 +60,21 @@ def run_argparse() -> ArgumentParser:
     parser.add_argument(
         'directory', nargs='?', default=os.getcwd(), 
         metavar="DIRECTORY",
-        help='''optional. the path of the directory to print.
+        help='''optional. the path of the directory to print a file tree of.
         (default: current working directory if not specified).'''
     )
 
     parser.add_argument(
         '-a', '--all',
         action='store_true',
-        help='include hidden files in the tree.'
+        help='include hidden files in the file tree.'
     )
 
     parser.add_argument(
         '-d', '--depth', default=10,
         type=int,
         metavar="<INT>",
-        help='limit of the subdirectory depth to recursively print (default: 10).'
+        help='Set the maximum directory depth to recursively print (default: 10).'
     )
 
     parser.add_argument(
@@ -82,11 +82,12 @@ def run_argparse() -> ArgumentParser:
         nargs='*', # 0 or more
         type=int,
         metavar="INT",
-        choices=range(0, 256), # 0–53
-        help='''0 or more arguments allowed. ANSI escape integer from 0 to 53. 0
-        for none, 1 for bold (default), 2 for dim, etc. more info:
-        https://en.wikipedia.org/wiki/ANSI_escape_code#Select_Graphic_Rendition_parameters
-        (default: 1)''' # TODO: improve help message
+        choices=range(0, 256), # 0–255
+        help='''Set one or more ANSI SGR parameters (integers 0–255) to apply to
+        directory names. 0 = none, 1 = bold, 2 = dim, etc. 
+        see https://en.wikipedia.org/wiki/ANSI\_escape\_code#Select\_Graphic\_Rendition\_parameters
+        multiple values allowed (space-separated). example: --directory-format 1 31 4
+        (bold, red, underline) (default: 1).''' # TODO: improve help message
     )
 
     parser.add_argument(
