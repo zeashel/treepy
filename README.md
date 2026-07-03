@@ -70,7 +70,7 @@ The [examples](#using-tree--d-0) probably explain this better.
 
 ### Formatting (experimental)
 
-You can set one or more ANSI SGR arguments (integers 0–255) to apply to directory names after the `--directory-format` option. Examples: 0 = none, 1 = bold, 2 = dim, 31 = red fg, 41 red bg, etc.
+You can set one or more ANSI SGR arguments (integers 0–255) to apply to directory names after the `--directory-format` option. Examples: 0 = none, 1 = bold, 2 = dim, 31 = red fg, 41 = red bg, etc.
 
 See the [wikipedia page on ANSI escape code](https://en.wikipedia.org/wiki/ANSI\_escape\_code#Select\_Graphic\_Rendition\_parameters) for more information.
 
@@ -118,6 +118,16 @@ ansi_parse(args.directory_format): '\x1b[1;31;4m'
 
 ...
 ```
+
+### Default configurations
+
+To make a tree configuration the default, add an alias to your shell configuration file. For example, in `.zshrc`:
+
+```bash
+alias tree="tree -d 3 --directory-format 1 33"
+```
+
+After that, running `tree` will always use `-d 3 --directory-format 1 33`, so you won’t need to type those options each time.
 
 ### Saving into a file
 
@@ -221,4 +231,4 @@ my-portfolio/
 
 ## Todo
 
-- [] add `--exclude` option to exclude certain files or directories from being printed in the file tree, e.g., node_modules/ or exclude files in .gitignore
+- [ ] add `--exclude` option to exclude certain files or directories from being printed in the file tree, e.g., node_modules/ or exclude files in .gitignore
