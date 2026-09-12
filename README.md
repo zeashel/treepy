@@ -1,6 +1,6 @@
 # tree.py
 
-A small python script to recursively print the structure of the current working directory (or any directory) and its subdirectories as a file tree.
+A small, customizable python script to recursively print the structure of the current working directory (or any directory) and its subdirectories as a file tree.
 
 <img src="assets/img/example.png" width=500>
 
