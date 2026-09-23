@@ -3,7 +3,7 @@
 """
 This script is open source under the MIT License.
 
-Copyright (c) 2025 Zahra A. S.
+Copyright (c) 2026 zeashel
 Email: 182934048+zeashel@users.noreply.github.com
 
 tree.py
@@ -57,8 +57,8 @@ def run_argparse() -> ArgumentParser:
 
     parser = ArgumentParser(
         description='''Recursively prints the structure of a certain directory
-        and its subdirectories as a file tree. This script is under the 
-        MIT License. Copyright (c) 2025 Zahra A. S.''',
+        and its subdirectories as a file tree. This script is under the
+        MIT License. Copyright (c) 2026 zeashel''',
         epilog='For more information, see documentation at github.com/zeashel/treepy',
         prog=NAME
     )
