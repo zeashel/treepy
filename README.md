@@ -38,11 +38,15 @@ Install from the releases page, then drag and drop the `tree` file into a direct
 tree
 ```
 
+---
+
 ### Print the structure of a certain directory
 
 ```bash
 tree ~/Projects/example/directory
 ```
+
+---
 
 ### Include dotfiles
 By default, tree ignores dotfiles. Use `-a` or `--all` flag to include them.
@@ -54,6 +58,8 @@ tree -a
 ```bash
 tree ~/Projects/example/directory --all
 ```
+
+---
 
 ### Subdirectory depth
 You can specifiy how many subdirectories you want to recursively print by using `-d` or `--depth` followed by an integer. By default, it is limited to 10, but you can specify any integer you want to display more.
@@ -67,6 +73,8 @@ tree --depth 1 # similar to ls command
 ```
 
 The [examples](#using-tree--d-0) probably explain this better.
+
+---
 
 ### Formatting (experimental)
 
@@ -107,6 +115,8 @@ Note that not all terminal emulators support true color.
 - Modern terminal emulators like iTerm2, Alacritty, Kitty, and KDE Konsole support true color.
 - You can check this by running `echo "$COLORTERM"`. If it returns `truecolor`, that means your current terminal supports true color
 
+---
+
 ### Verbose
 
 Use the `--verbose` option to view the exact ANSI escape code your input produces
@@ -126,6 +136,8 @@ ansi_parse(args.directory_format): '\x1b[1;31;4m'
 ...
 ```
 
+---
+
 ### Default configurations
 
 To make a tree configuration the default, add an alias to your shell configuration file. For example, in `.zshrc`:
@@ -135,6 +147,8 @@ alias tree="tree -d 3 --directory-format 1 33"
 ```
 
 After that, running `tree` will always use `-d 3 --directory-format 1 33`, so you won’t need to type those options each time.
+
+---
 
 ### Saving into a file
 
