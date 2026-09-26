@@ -84,6 +84,8 @@ Multiple values allowed (space-separated)
 tree --directory-format 1 31 4 # bold, red, underline
 ```
 
+#### Xterm256 colors
+
 It's also possible to print [xterm256 colors](https://en.wikipedia.org/wiki/ANSI_escape_code#8-bit) or [true color](https://en.wikipedia.org/wiki/ANSI_escape_code#24-bit) as long as your terminal supports it.
 
 8-bit/xterm256 `Red1` foreground (`\033[38;5;196m`):
@@ -92,13 +94,18 @@ It's also possible to print [xterm256 colors](https://en.wikipedia.org/wiki/ANSI
 tree --directory-format 38 5 196
 ```
 
+#### True Color
+
 True color `#ff5f5f` `rgb(255,95,95)` foreground (`\033[38;2;255;95;95m`):
 
 ```bash
 tree --directory-format 38 2 255 95 95
 ```
 
-Note that not many terminals support true color.
+Note that not all terminal emulators support true color.
+
+- Modern terminal emulators like iTerm2, Alacritty, Kitty, and KDE Konsole support true color.
+- You can check this by running `echo "$COLORTERM"`. If it returns `truecolor`, that means your current terminal supports true color
 
 ### Verbose
 
