@@ -253,3 +253,4 @@ my-portfolio/
 ## Todo
 
 - [ ] add `--exclude` option to exclude certain files or directories from being printed in the file tree, e.g., node_modules/ or exclude files in .gitignore
+- [ ] add `$COLORTERM` output to --verbose
