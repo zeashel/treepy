@@ -12,8 +12,8 @@ Recursively prints the structure of a certain directory and its subdirectories a
 """
 
 import os
-import sys
 from argparse import ArgumentParser, Namespace
+from sys import stdout
 
 NAME = "tree"
 
@@ -37,7 +37,7 @@ def main() -> None:
             repr(ansi_parse(args.directory_format)),
         )
 
-    use_color = args.color_force or sys.stdout.isatty()
+    use_color = args.color_force or stdout.isatty()
     fmt_dir = ansi_parse(args.directory_format) if use_color else ""
     fmt_reset = "\033[0m" if use_color else ""
 
