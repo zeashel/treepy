@@ -16,6 +16,7 @@ from argparse import ArgumentParser, Namespace
 from sys import stdout
 
 NAME = "tree"
+VERSION = "v0.1.0"
 
 
 def main() -> None:
@@ -27,7 +28,6 @@ def main() -> None:
     """
     args = run_argparse()
 
-    # TEMP
     if args.verbose:
         print("args.all:", args.all)
         print("args.max_depth:", args.depth)
@@ -115,6 +115,14 @@ def run_argparse() -> Namespace:
 
     parser.add_argument(
         "-v", "--verbose", action="store_true", help="enable verbose output."
+    )
+
+    parser.add_argument(
+        "-V",
+        "--version",
+        action="version",
+        version=f"{NAME} {VERSION}",
+        help="print version.",
     )
 
     return parser.parse_args()
