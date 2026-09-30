@@ -222,8 +222,7 @@ def print_tree(
             + ("└─╴" if is_last else "├─╴")
             + (format_dir if os.path.isdir(path) else "")
             + item
-            + ("/" + format_reset if os.path.isdir(path) else ""),
-            sep="",
+            + ("/" + format_reset if os.path.isdir(path) else "")
         )
 
         # if its a directory, recursively print its contents
