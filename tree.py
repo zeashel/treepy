@@ -30,7 +30,7 @@ def main() -> None:
 
     if args.verbose:
         print("args.all:", args.all)
-        print("args.max_depth:", args.depth)
+        print("args.depth:", args.depth)
         print("args.directory_format:", args.directory_format)
         print(
             "ansi_parse(args.directory_format):",
