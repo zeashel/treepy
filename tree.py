@@ -11,11 +11,12 @@ tree.py
 Recursively prints the structure of a certain directory and its subdirectories as a file tree.
 """
 
-from argparse import ArgumentParser
 import os
 import sys
+from argparse import ArgumentParser
 
-NAME="tree"
+NAME = "tree"
+
 
 def main() -> None:
     """
@@ -31,7 +32,10 @@ def main() -> None:
         print("args.all:", args.all)
         print("args.max_depth:", args.depth)
         print("args.directory_format:", args.directory_format)
-        print("ansi_parse(args.directory_format):", repr(ansi_parse(args.directory_format)))
+        print(
+            "ansi_parse(args.directory_format):",
+            repr(ansi_parse(args.directory_format)),
+        )
 
     use_color = args.color_force or sys.stdout.isatty()
     fmt_dir = ansi_parse(args.directory_format) if use_color else ""
@@ -43,72 +47,78 @@ def main() -> None:
             include_dotfiles=args.all,
             max_depth=args.depth,
             format_dir=fmt_dir,
-            format_reset=fmt_reset
+            format_reset=fmt_reset,
         )
+
 
 def run_argparse() -> ArgumentParser:
     """
     Parse the user's command line arguments. Runs at the beginning of the program.
 
     Args: None
-    Returns: 
+    Returns:
         ArgumentParser: an object, parser.parse_args() (parsed arguments)
     """
 
     parser = ArgumentParser(
-        description='''Recursively prints the structure of a certain directory
+        description="""Recursively prints the structure of a certain directory
         and its subdirectories as a file tree. This script is under the
-        MIT License. Copyright (c) 2026 zeashel''',
-        epilog='For more information, see documentation at github.com/zeashel/treepy',
-        prog=NAME
+        MIT License. Copyright (c) 2026 zeashel""",
+        epilog="For more information, see documentation at github.com/zeashel/treepy",
+        prog=NAME,
     )
 
     parser.add_argument(
-        'directory', nargs='?', default=os.getcwd(), 
+        "directory",
+        nargs="?",
+        default=os.getcwd(),
         metavar="DIRECTORY",
-        help='''optional. the path of the directory to print a file tree of.
-        (default: current working directory if not specified).'''
+        help="""optional. the path of the directory to print a file tree of.
+        (default: current working directory if not specified).""",
     )
 
     parser.add_argument(
-        '-a', '--all',
-        action='store_true',
-        help='include hidden files in the file tree.'
+        "-a",
+        "--all",
+        action="store_true",
+        help="include hidden files in the file tree.",
     )
 
     parser.add_argument(
-        '-d', '--depth', default=10,
+        "-d",
+        "--depth",
+        default=10,
         type=int,
         metavar="<INT>",
-        help='Set the maximum directory depth to recursively print (default: 10).'
+        help="Set the maximum directory depth to recursively print (default: 10).",
     )
 
     parser.add_argument(
-        '--directory-format', default=[1],
-        nargs='*', # 0 or more
+        "--directory-format",
+        default=[1],
+        nargs="*",  # 0 or more
         type=int,
         metavar="INT",
-        choices=range(0, 256), # 0–255
-        help='''Set one or more ANSI SGR parameters (integers 0–255) to apply to
-        directory names. 0 = none, 1 = bold, 2 = dim, etc. 
+        choices=range(0, 256),  # 0–255
+        help="""Set one or more ANSI SGR parameters (integers 0–255) to apply to
+        directory names. 0 = none, 1 = bold, 2 = dim, etc.
         see https://en.wikipedia.org/wiki/ANSI_escape_code#Select_Graphic_Rendition_parameters
         multiple values allowed (space-separated). example: --directory-format 1 31 4
-        (bold, red, underline) (default: 1).''' # TODO: improve help message
+        (bold, red, underline) (default: 1).""",  # TODO: improve help message
     )
 
     parser.add_argument(
-        '-v', '--verbose',
-        action='store_true',
-        help='enable verbose output.'
+        "-v", "--verbose", action="store_true", help="enable verbose output."
     )
 
     parser.add_argument(
-        '--color-force',
-        action='store_true',
-        help='force color output even if stdout is not a TTY.'
+        "--color-force",
+        action="store_true",
+        help="force color output even if stdout is not a TTY.",
     )
 
     return parser.parse_args()
+
 
 def directory_sanitizer(path: str) -> bool:
     """
@@ -137,6 +147,7 @@ def directory_sanitizer(path: str) -> bool:
         print(f"error checking directory:\n{e}")
         return False
 
+
 def ansi_parse(args: list) -> str:
     """
     Parse the given list of inters into a single ANSI escape sequence or an empty string.
@@ -145,7 +156,7 @@ def ansi_parse(args: list) -> str:
         args (list): List of integers that will be joined into one ANSI escape sequence.
 
     Returns:
-        str: An ANSI escape sequence with the joined integers from args. 
+        str: An ANSI escape sequence with the joined integers from args.
              e.g., [1, 3, 95] -> "\\033[1;3;95m"
         str: If the list contains anything other than an integer, return an empty string.
     """
@@ -155,23 +166,24 @@ def ansi_parse(args: list) -> str:
         return ""
     return f"\033[{';'.join(map(str, args))}m"
 
+
 def print_tree(
     directory: str,
-    prefix: str="",
-    include_dotfiles: bool=False,
-    max_depth: int=10,
-    current_depth: int=0,
-    format_dir: str="\033[1m", # default bold
-    format_reset: str="\033[0m" # default reset
+    prefix: str = "",
+    include_dotfiles: bool = False,
+    max_depth: int = 10,
+    current_depth: int = 0,
+    format_dir: str = "\033[1m",  # default bold
+    format_reset: str = "\033[0m",  # default reset
 ) -> None:
     """
     Print the directory and subdirectories structure in a tree-esque format.
 
     Args:
         directory (str): The path to the directory to be printed.
-        prefix (str, optional): The string prefix used for indentation in the output. 
+        prefix (str, optional): The string prefix used for indentation in the output.
                                 Defaults to an empty string.
-        include_dotfiles (bool, optional): If True, include hidden files (dotfiles) 
+        include_dotfiles (bool, optional): If True, include hidden files (dotfiles)
                                            in the output. Defaults to False.
         max_depth (int, optional): The maximum depth of recursion. Defaults to no limit.
         current_depth (int, optional): The current depth of recursion. Defaults to 0.
@@ -193,7 +205,7 @@ def print_tree(
     items = os.listdir(directory)
     if include_dotfiles is False:
         # remove all dot files
-        items = [item for item in items if not item.startswith('.')]
+        items = [item for item in items if not item.startswith(".")]
     # count the number of items to handle the last item differently
     count = len(items)
 
@@ -202,16 +214,16 @@ def print_tree(
         path = os.path.join(directory, item)
 
         # check if the item is last
-        is_last = (index == count - 1) # bool
+        is_last = index == count - 1  # bool
 
         # print the tree structure
         print(
-            prefix +
-            ("└─╴" if is_last else "├─╴") +
-            (format_dir if os.path.isdir(path) else "") +
-            item +
-            ("/" + format_reset if os.path.isdir(path) else ""),
-            sep=""
+            prefix
+            + ("└─╴" if is_last else "├─╴")
+            + (format_dir if os.path.isdir(path) else "")
+            + item
+            + ("/" + format_reset if os.path.isdir(path) else ""),
+            sep="",
         )
 
         # if its a directory, recursively print its contents
@@ -224,8 +236,9 @@ def print_tree(
                 max_depth,
                 current_depth + 1,
                 format_dir,
-                format_reset
+                format_reset,
             )
+
 
 if __name__ == "__main__":
     main()
