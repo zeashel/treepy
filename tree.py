@@ -90,7 +90,13 @@ def run_argparse() -> Namespace:
         default=10,
         type=int,
         metavar="<INT>",
-        help="Set the maximum directory depth to recursively print (default: 10).",
+        help="set the maximum directory depth to recursively print (default: 10).",
+    )
+
+    parser.add_argument(
+        "--color-force",
+        action="store_true",
+        help="force color output even if stdout is not a TTY.",
     )
 
     parser.add_argument(
@@ -100,7 +106,7 @@ def run_argparse() -> Namespace:
         type=int,
         metavar="INT",
         choices=range(0, 256),  # 0–255
-        help="""Set one or more ANSI SGR parameters (integers 0–255) to apply to
+        help="""set one or more ANSI SGR parameters (integers 0–255) to apply to
         directory names. 0 = none, 1 = bold, 2 = dim, etc.
         see https://en.wikipedia.org/wiki/ANSI_escape_code#Select_Graphic_Rendition_parameters
         multiple values allowed (space-separated). example: --directory-format 1 31 4
@@ -109,12 +115,6 @@ def run_argparse() -> Namespace:
 
     parser.add_argument(
         "-v", "--verbose", action="store_true", help="enable verbose output."
-    )
-
-    parser.add_argument(
-        "--color-force",
-        action="store_true",
-        help="force color output even if stdout is not a TTY.",
     )
 
     return parser.parse_args()
