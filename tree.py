@@ -13,7 +13,7 @@ Recursively prints the structure of a certain directory and its subdirectories a
 
 import os
 import sys
-from argparse import ArgumentParser
+from argparse import ArgumentParser, Namespace
 
 NAME = "tree"
 
@@ -51,13 +51,13 @@ def main() -> None:
         )
 
 
-def run_argparse() -> ArgumentParser:
+def run_argparse() -> Namespace:
     """
     Parse the user's command line arguments. Runs at the beginning of the program.
 
     Args: None
     Returns:
-        ArgumentParser: an object, parser.parse_args() (parsed arguments)
+        argparse.Namespace: an object, parser.parse_args() (parsed arguments)
     """
 
     parser = ArgumentParser(
