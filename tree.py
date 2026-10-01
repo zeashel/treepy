@@ -251,15 +251,14 @@ def verbose_output(args: Namespace) -> None:
         repr(ansi_parse(args.directory_format)),
     )
 
+    colorterm = os.environ.get("COLORTERM", "undetected")
+    term_program = os.environ.get("TERM_PROGRAM", "undetected")
+
     print("TERM INFO")
-    print(
-        "colorterm:",
-        os.environ.get("COLORTERM", "undetected"),
-        f"({os.environ.get('TERM_PROGRAM')})",
-    )
+    print(f"colorterm: {colorterm} ({term_program})")
     print(
         "truecolor support:",
-        ("yes" if os.environ.get("COLORTERM") == "truecolor" else "no"),
+        ("yes" if colorterm == "truecolor" else "no"),
     )
     print(" ")
 
