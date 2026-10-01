@@ -29,6 +29,7 @@ def main() -> None:
     args = run_argparse()
 
     if args.verbose:
+        print("\nVERBOSE OUTPUT")
         print("args.all:", args.all)
         print("args.depth:", args.depth)
         print("args.directory_format:", args.directory_format)
@@ -36,6 +37,18 @@ def main() -> None:
             "ansi_parse(args.directory_format):",
             repr(ansi_parse(args.directory_format)),
         )
+
+        print("TERM INFO")
+        print(
+            "colorterm:",
+            os.environ.get("COLORTERM", "undetected"),
+            f"({os.environ.get('TERM_PROGRAM')})",
+        )
+        print(
+            "truecolor support:",
+            ("yes" if os.environ.get("COLORTERM") == "truecolor" else "no"),
+        )
+        print(" ")
 
     use_color = args.color_force or stdout.isatty()
     fmt_dir = ansi_parse(args.directory_format) if use_color else ""
