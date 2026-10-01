@@ -67,7 +67,7 @@ def run_argparse() -> Namespace:
         nargs="?",
         default=os.getcwd(),
         metavar="DIRECTORY",
-        help="""optional. the path of the directory to print a file tree of.
+        help="""Optional. The path of the directory to print a file tree of.
         (default: current working directory if not specified).""",
     )
 
@@ -75,7 +75,7 @@ def run_argparse() -> Namespace:
         "-a",
         "--all",
         action="store_true",
-        help="include hidden files in the file tree.",
+        help="Include hidden files in the file tree.",
     )
 
     parser.add_argument(
@@ -84,13 +84,13 @@ def run_argparse() -> Namespace:
         default=10,
         type=int,
         metavar="<INT>",
-        help="set the maximum directory depth to recursively print (default: 10).",
+        help="Set the maximum directory depth to recursively print (default: 10).",
     )
 
     parser.add_argument(
         "--color-force",
         action="store_true",
-        help="force color output even if stdout is not a TTY.",
+        help="Force color output even if stdout is not a TTY.",
     )
 
     parser.add_argument(
@@ -101,15 +101,15 @@ def run_argparse() -> Namespace:
         type=int,
         metavar="INT",
         choices=range(0, 256),  # 0–255
-        help="""set one or more ANSI SGR parameters (integers 0–255) to apply to
-        directory names. 0 = none, 1 = bold, 2 = dim, etc.
-        see https://en.wikipedia.org/wiki/ANSI_escape_code#Select_Graphic_Rendition_parameters
-        multiple values allowed (space-separated). example: --directory-format 1 31 4
-        (bold, red, underline) (default: 1).""",  # TODO: improve help message
+        help="""ANSI SGR parameters for directory names (0–255).
+        Provide one or more space-separated values, e.g. `-D 1 31 4`
+        for bold, red, and underlined text. (default: 1).
+        See https://en.wikipedia.org/wiki/ANSI_escape_code#Select_Graphic_Rendition_parameters
+        """,  # TODO: improve help message
     )
 
     parser.add_argument(
-        "-v", "--verbose", action="store_true", help="enable verbose output."
+        "-v", "--verbose", action="store_true", help="Enable verbose output."
     )
 
     parser.add_argument(
@@ -117,7 +117,7 @@ def run_argparse() -> Namespace:
         "--version",
         action="version",
         version=f"{NAME} {VERSION}",
-        help="print version.",
+        help="Print version.",
     )
 
     return parser.parse_args()
