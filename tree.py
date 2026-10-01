@@ -95,6 +95,7 @@ def run_argparse() -> Namespace:
 
     parser.add_argument(
         "--directory-format",
+        "-D",
         default=[1],
         nargs="*",  # 0 or more
         type=int,
